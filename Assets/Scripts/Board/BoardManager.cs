@@ -184,4 +184,20 @@ public class BoardManager : MonoBehaviour
             ScoreManager.Instance?.AddScore(pointsEarned);
         }
     }
+    // Kiểm tra xem một khối gạch cụ thể có thể đặt vào bất kỳ vị trí nào trên bàn cờ không
+    public bool HasAnyValidMove(BlockData blockData)
+    {
+        for (int r = 0; r < rows; r++)
+        {
+            for (int c = 0; c < columns; c++)
+            {
+                // Thử ướm khối gạch vào tọa độ (r, c) này
+                if (CanPlaceBlock(blockData, r, c))
+                {
+                    return true; // Chỉ cần có ít nhất 1 chỗ trống vừa vặn
+                }
+            }
+        }
+        return false; // Không tìm thấy bất kỳ chỗ nào chứa vừa khối gạch này
+    }
 }
