@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BoardManager : MonoBehaviour
 {
@@ -118,6 +119,69 @@ public class BoardManager : MonoBehaviour
                     board[targetRow, targetCol].SetOccupied(true, blockColor);
                 }
             }
+        }
+        CheckAndClearLines();
+    }
+    private void CheckAndClearLines()
+    {
+        List<int> fullRows = new List<int>();
+        List<int> fullCols = new List<int>();
+
+        // 1. Kiểm tra các hàng đầy
+        for (int r = 0; r < rows; r++)
+        {
+            bool isRowFull = true;
+            for (int c = 0; c < columns; c++)
+            {
+                if (!board[r, c].IsOccupied)
+                {
+                    isRowFull = false;
+                    break;
+                }
+            }
+            if (isRowFull) fullRows.Add(r);
+        }
+
+        // 2. Kiểm tra các cột đầy (Rất quan trọng trong Block Blast)
+        for (int c = 0; c < columns; c++)
+        {
+            bool isColFull = true;
+            for (int r = 0; r < rows; r++)
+            {
+                if (!board[r, c].IsOccupied)
+                {
+                    isColFull = false;
+                    break;
+                }
+            }
+            if (isColFull) fullCols.Add(c);
+        }
+
+        // 3. Tiến hành dọn dẹp (Clear) các hàng và cột đầy
+        int totalCleared = fullRows.Count + fullCols.Count;
+        if (totalCleared > 0)
+        {
+            // Reset trạng thái các ô thuộc hàng bị đầy
+            foreach (int r in fullRows)
+            {
+                for (int c = 0; c < columns; c++)
+                {
+                    board[r, c].SetOccupied(false, Color.white); // Truyền Color.white nhưng hàm SetOccupied sẽ tự reset về màu gốc
+                }
+            }
+
+            // Reset trạng thái các ô thuộc cột bị đầy
+            foreach (int c in fullCols)
+            {
+                for (int r = 0; r < rows; r++)
+                {
+                    board[r, c].SetOccupied(false, Color.white);
+                }
+            }
+
+            // Cộng điểm số dựa trên số hàng/cột ăn được (Có thể nhân thêm hệ số Combo nếu ăn nhiều hàng cùng lúc)
+            int pointsEarned = totalCleared * 100 * (totalCleared);
+            ScoreManager.Instance?.AddScore(pointsEarned);
         }
     }
 }
