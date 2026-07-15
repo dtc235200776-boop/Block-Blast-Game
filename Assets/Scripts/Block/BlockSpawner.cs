@@ -37,7 +37,10 @@ public class BlockSpawner : MonoBehaviour
             BlockLibrary.CreateMiniCorner()         // Khối góc chữ L mini 2x2
         };
 
-        // Sinh Block tại tất cả các điểm Spawn khi game bắt đầu
+        SpawnAllBlocks();
+    }
+    public void SpawnAllBlocks()
+    {
         for (int i = 0; i < spawnPoints.Length; i++)
         {
             SpawnBlock(spawnPoints[i]);
@@ -73,5 +76,34 @@ public class BlockSpawner : MonoBehaviour
 
         // Thu nhỏ khối block lại bằng 60% kích thước chuẩn khi nằm ở khay chờ cho đẹp mắt
         block.transform.localScale = Vector3.one * 0.6f;
+    }
+    // --- ĐOẠN CODE BỔ SUNG: KIỂM TRA VÀ TỰ ĐỘNG BƠM LƯỢT HÌNH MỚI ---
+    public void CheckAndRepopulate()
+    {
+        // Chạy một Coroutine nhỏ để đợi khối vừa đặt bị hủy hoàn toàn rồi mới đếm
+        StartCoroutine(CheckAfterFrame());
+    }
+
+    private IEnumerator CheckAfterFrame()
+    {
+        // Đợi đến cuối khung hình hiện tại để lệnh Destroy(block) thực thi xong
+        yield return new WaitForEndOfFrame();
+
+        int activeBlocks = 0;
+
+        // Quét qua 3 điểm SpawnPoint xem còn cái nào chứa Block con không
+        foreach (Transform point in spawnPoints)
+        {
+            if (point != null && point.childCount > 0)
+            {
+                activeBlocks++;
+            }
+        }
+
+        // Nếu khay chờ đã sạch bóng (bằng 0), tự động sinh tiếp 3 khối mới!
+        if (activeBlocks == 0)
+        {
+            SpawnAllBlocks();
+        }
     }
 }
