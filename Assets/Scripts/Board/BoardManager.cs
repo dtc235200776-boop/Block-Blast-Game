@@ -104,7 +104,7 @@ public class BoardManager : MonoBehaviour
     public void PlaceBlock(BlockData blockData, int startRow, int startCol)
     {
         // Chọn một màu ngẫu nhiên cho khối khi đặt xuống bàn cờ (hoặc dùng màu cố định tùy bạn)
-        Color blockColor = new Color(0.12f, 0.73f, 0.91f); // Màu xanh Cyan nổi bật
+        Color blockColor = blockData.blockColor;
 
         for (int r = 0; r < blockData.Rows; r++)
         {
