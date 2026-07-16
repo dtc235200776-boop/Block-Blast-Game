@@ -42,7 +42,7 @@ public class BoardManager : MonoBehaviour
             {
                 Vector3 position = new Vector3(startX + col * CellSize, startY + row * CellSize, 0);
                 GameObject cellObject = Instantiate(cellPrefab, position, Quaternion.identity, transform);
-                cellObject.transform.localScale = Vector3.one * CellSize * 0.95f;
+                cellObject.transform.localScale = Vector3.one * CellSize;
 
                 Cell cell = cellObject.GetComponent<Cell>();
                 cell.Initialize(row, col);
@@ -100,11 +100,10 @@ public class BoardManager : MonoBehaviour
         return true;
     }
 
-    // Thực hiện đặt Block xuống và nhuộm màu bàn cờ
+    // ĐÃ SỬA: Thực hiện đặt Block xuống và gán chỉ số đá quý lên bàn cờ
     public void PlaceBlock(BlockData blockData, int startRow, int startCol)
     {
-        // Chọn một màu ngẫu nhiên cho khối khi đặt xuống bàn cờ (hoặc dùng màu cố định tùy bạn)
-        Color blockColor = blockData.blockColor;
+        int gemIndex = blockData.gemIndex;
 
         for (int r = 0; r < blockData.Rows; r++)
         {
@@ -115,13 +114,15 @@ public class BoardManager : MonoBehaviour
                     int targetRow = startRow - r;
                     int targetCol = startCol + c;
 
-                    // Đánh dấu ô bị chiếm và đổi màu
-                    board[targetRow, targetCol].SetOccupied(true, blockColor);
+                    // Đánh dấu ô bị chiếm và đổi Sprite đá quý theo gemIndex
+                    board[targetRow, targetCol].SetOccupied(true, gemIndex);
                 }
             }
         }
         CheckAndClearLines();
     }
+
+    // ĐÃ SỬA: Hàm dọn dẹp hàng/cột đầy sẽ truyền vào -1 khi dọn ô trống
     private void CheckAndClearLines()
     {
         List<int> fullRows = new List<int>();
@@ -161,29 +162,30 @@ public class BoardManager : MonoBehaviour
         int totalCleared = fullRows.Count + fullCols.Count;
         if (totalCleared > 0)
         {
-            // Reset trạng thái các ô thuộc hàng bị đầy
+            // Reset trạng thái các ô thuộc hàng bị đầy (truyền -1 để dọn dẹp đá quý)
             foreach (int r in fullRows)
             {
                 for (int c = 0; c < columns; c++)
                 {
-                    board[r, c].SetOccupied(false, Color.white); // Truyền Color.white nhưng hàm SetOccupied sẽ tự reset về màu gốc
+                    board[r, c].SetOccupied(false, -1);
                 }
             }
 
-            // Reset trạng thái các ô thuộc cột bị đầy
+            // Reset trạng thái các ô thuộc cột bị đầy (truyền -1 để dọn dẹp đá quý)
             foreach (int c in fullCols)
             {
                 for (int r = 0; r < rows; r++)
                 {
-                    board[r, c].SetOccupied(false, Color.white);
+                    board[r, c].SetOccupied(false, -1);
                 }
             }
 
-            // Cộng điểm số dựa trên số hàng/cột ăn được (Có thể nhân thêm hệ số Combo nếu ăn nhiều hàng cùng lúc)
+            // Cộng điểm số dựa trên số hàng/cột ăn được
             int pointsEarned = totalCleared * 100 * (totalCleared);
             ScoreManager.Instance?.AddScore(pointsEarned);
         }
     }
+
     // Kiểm tra xem một khối gạch cụ thể có thể đặt vào bất kỳ vị trí nào trên bàn cờ không
     public bool HasAnyValidMove(BlockData blockData)
     {

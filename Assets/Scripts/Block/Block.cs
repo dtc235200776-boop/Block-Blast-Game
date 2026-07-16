@@ -55,14 +55,14 @@ public class Block : MonoBehaviour
                 // Căn vị trí cục bộ theo cellSize đồng bộ
                 cell.transform.localPosition = new Vector3(startX + col * cellSize, startY - row * cellSize, 0f);
                 //Màu Block 
-                SpriteRenderer cellRenderer = cell.GetComponent<SpriteRenderer>();
-                if (cellRenderer != null && blockData != null)
+                Cell cellScript = cell.GetComponent<Cell>();
+                if (cellScript != null && blockData != null)
                 {
-                    cellRenderer.color = blockData.blockColor;
+                    cellScript.SetOccupied(true, blockData.gemIndex);
                 }
 
                 // --- SỬA LỖI SCALE BẰNG 0: Nếu scale quá bé hoặc lỗi, gán bằng 0.5f để phòng vệ ---
-                float finalScale = cellSize * 0.95f;
+                float finalScale = cellSize;
                 if (finalScale <= 0.01f)
                 {
                     finalScale = 0.5f;

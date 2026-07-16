@@ -6,7 +6,7 @@ public static class BlockLibrary
     public static BlockData CreateDotBlock()
     {
         bool[,] shape = { { true } };
-        return new BlockData(shape, Color.cyan);
+        return new BlockData(shape, 4);
     }
 
     // 2. Khối Square 2x2 (Đã có)
@@ -16,7 +16,7 @@ public static class BlockLibrary
             { true, true },
             { true, true }
         };
-        return new BlockData(shape, Color.green);
+        return new BlockData(shape, 5);
     }
 
     // 3. Khối Square lớn 3x3
@@ -27,26 +27,26 @@ public static class BlockLibrary
             { true, true, true },
             { true, true, true }
         };
-        return new BlockData(shape, Color.red);
+        return new BlockData(shape, 7);
     }
 
     // 4. Các thanh thẳng (Line) đủ kích cỡ
     public static BlockData CreateLine2()
     {
         bool[,] shape = { { true, true } };
-        return new BlockData(shape, Color.yellow);
+        return new BlockData(shape, 3);
     }
 
     public static BlockData CreateLine3()
     {
         bool[,] shape = { { true, true, true } };
-        return new BlockData(shape, Color.white);
+        return new BlockData(shape, 3);
     }
 
     public static BlockData CreateLine4()
     {
         bool[,] shape = { { true, true, true, true } };
-        return new BlockData(shape, new Color(1f, 0.41f, 0.38f));
+        return new BlockData(shape, 7);
     }
 
     public static BlockData CreateLineVertical3()
@@ -56,7 +56,7 @@ public static class BlockLibrary
             { true },
             { true }
         };
-        return new BlockData(shape, Color.blue);
+        return new BlockData(shape, 6);
     }
 
     // 5. Khối chữ L và J (Kích cỡ 2x3 và 3x2)
@@ -67,7 +67,7 @@ public static class BlockLibrary
             { true, false },
             { true, true }
         };
-        return new BlockData(shape, new Color(1f, 0.76f, 0.03f));
+        return new BlockData(shape, 0);
     }
 
     public static BlockData CreateLReverse()
@@ -77,7 +77,7 @@ public static class BlockLibrary
             { false, true },
             { true, true }
         };
-        return new BlockData(shape, new Color(0.96f, 0.49f, 0.15f));
+        return new BlockData(shape, 0);
     }
 
     // 6. Khối chữ T
@@ -87,7 +87,7 @@ public static class BlockLibrary
             { true, true, true },
             { false, true, false }
         };
-        return new BlockData(shape, new Color(0.01f, 0.66f, 0.96f));
+        return new BlockData(shape, 2);
     }
 
     // 7. Khối chữ Z và S
@@ -97,7 +97,7 @@ public static class BlockLibrary
             { true, true, false },
             { false, true, true }
         };
-        return new BlockData(shape, new Color(0.12f, 0.73f, 0.84f));
+        return new BlockData(shape, 4);
     }
 
     public static BlockData CreateSBlock()
@@ -106,7 +106,7 @@ public static class BlockLibrary
             { false, true, true },
             { true, true, false }
         };
-        return new BlockData(shape, new Color(0.12f, 0.81f, 0.43f));
+        return new BlockData(shape, 5);
     }
 
     // 8. Khối góc nhỏ 2x2 (Hình chữ L mini)
@@ -116,6 +116,6 @@ public static class BlockLibrary
             { true, true },
             { true, false }
         };
-        return new BlockData(shape, new Color(1f, 0.43f, 0.54f));
+        return new BlockData(shape, 1);
     }
 }

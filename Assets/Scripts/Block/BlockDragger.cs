@@ -26,6 +26,9 @@ public class BlockDragger : MonoBehaviour
     private void Start()
     {
         originalPosition = transform.position;
+
+        // Đảm bảo khối ở khay chờ hiển thị ở layer vừa phải để không tranh chấp với bàn cờ
+        SetChildrenSortingOrder(5);
     }
 
     private void OnMouseDown()
@@ -34,6 +37,9 @@ public class BlockDragger : MonoBehaviour
         Vector3 mouseWorldPos = GetMouseWorldPosition();
         offset = transform.position - mouseWorldPos;
         transform.localScale = Vector3.one; // Đưa về kích thước 100% khi kéo
+
+        // Đẩy toàn bộ các ô con của khối lên layer cao nhất (50) để luôn đè lên bàn cờ khi đang kéo
+        SetChildrenSortingOrder(50);
     }
 
     private void OnMouseDrag()
@@ -92,6 +98,9 @@ public class BlockDragger : MonoBehaviour
     {
         transform.position = originalPosition;
         transform.localScale = Vector3.one * 0.6f; // Thu nhỏ lại 60% khi về khay chờ
+
+        // Đưa layer các ô con trở về mức bình thường (5) khi quay về khay chờ
+        SetChildrenSortingOrder(5);
     }
 
     private Vector3 GetMouseWorldPosition()
@@ -127,6 +136,16 @@ public class BlockDragger : MonoBehaviour
                     return;
                 }
             }
+        }
+    }
+
+    // Hàm bổ sung giúp thay đổi nhanh Sorting Order của toàn bộ ô con nằm trong khối gạch này
+    private void SetChildrenSortingOrder(int order)
+    {
+        SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
+        foreach (SpriteRenderer sr in renderers)
+        {
+            sr.sortingOrder = order;
         }
     }
 }

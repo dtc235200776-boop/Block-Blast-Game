@@ -73,13 +73,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.5698112, g: 0.5698112, b: 0.5698112, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_DrawMode: 1
+  m_Size: {x: 0.9, y: 0.9}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -97,3 +97,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2711ebb7b9fbbd4bbaa4864074a538f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gemSprites:
+  - {fileID: 21300000, guid: 126dda9eebec76843be36bcdd71aa82a, type: 3}
+  - {fileID: 21300000, guid: 44779fe351f263e488ea1cea0af1bb75, type: 3}
+  - {fileID: 21300000, guid: c76e9e16b66b0634b8f1795271521af7, type: 3}
+  - {fileID: 21300000, guid: fe9bf7aa79ec65542bef50d4e8a30c6c, type: 3}
+  - {fileID: 21300000, guid: 44ee5cc84035ce9438111db73c1aa21b, type: 3}
+  - {fileID: 21300000, guid: b2cebb9ccf31cf949891cfb98e23b87f, type: 3}
+  - {fileID: 21300000, guid: 5a19e4927dec5634abf5276373f699e7, type: 3}
+  - {fileID: 21300000, guid: faf786e08b76b234f8c753fcc47d9452, type: 3}
+  defaultEmptySprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
